@@ -31,9 +31,7 @@ class GameImpl(representation: String) : Game {
     // First handle static elements, then mobile
     val actions = (static + mobile)
       .flatMap { element ->
-        maze.position(element)?.let { position ->
-          element.playTurn(maze)
-        } ?: listOf<GameAction>()
+        element.playTurn(maze)
       }
     applyActions(actions)
   }
@@ -56,15 +54,20 @@ class GameImpl(representation: String) : Game {
     return robot.score() * 100 - turns
   }
 
-  private fun applyActions(actions: Collection<GameAction>) {
+  private fun applyActions(
+    actions: Collection<GameAction>
+  ) {
     for (action in actions) {
       when (action) {
-        is DestroyAction -> maze.remove(action.element)
+        is DestroyAction ->
+          maze.remove(action.element)
         is MoveAction -> {
           maze.remove(action.element)
           maze.add(action.element, action.newPosition)
         }
-        is CreateAction -> maze.add(action.element, action.position)
+        is CreateAction ->
+          maze.add(action.element,
+            action.position)
       }
     }
   }
