@@ -5,134 +5,134 @@ import org.junit.Test
 import java.lang.IllegalStateException
 
 class TestMatrix {
-    @Test
-    fun testAdditionOfOneElement() {
-        val matrix = MatrixImpl<Int>(5, 5)
-        val position = Position(2, 3)
-        matrix.add(42, position)
-        Assert.assertEquals(
-            "Element wasn't added:",
-            setOf(42), matrix.allAt(position)
-        )
-        assertConsistentState(matrix)
-    }
+  @Test
+  fun testAdditionOfOneElement() {
+    val matrix = MatrixImpl<Int>(5, 5)
+    val position = Position(2, 3)
+    matrix.add(42, position)
+    Assert.assertEquals(
+      "Element wasn't added:",
+      setOf(42), matrix.allAt(position)
+    )
+    assertConsistentState(matrix)
+  }
 
-    @Test
-    fun testAdditionOfSeveralElements() {
-        val matrix = MatrixImpl<Int>(5, 5)
-        val position = Position(2, 3)
-        matrix.add(42, position)
-        matrix.add(50, position)
-        Assert.assertEquals(
-            "Element wasn't added:",
-            setOf(42, 50), matrix.allAt(position)
-        )
-        assertConsistentState(matrix)
-    }
+  @Test
+  fun testAdditionOfSeveralElements() {
+    val matrix = MatrixImpl<Int>(5, 5)
+    val position = Position(2, 3)
+    matrix.add(42, position)
+    matrix.add(50, position)
+    Assert.assertEquals(
+      "Element wasn't added:",
+      setOf(42, 50), matrix.allAt(position)
+    )
+    assertConsistentState(matrix)
+  }
 
-    @Test
-    fun testPosition() {
-        val matrix = MatrixImpl<Int>(5, 5)
-        val position = Position(2, 3)
-        matrix.add(42, position)
-        Assert.assertEquals(
-            "Element wasn't added:",
-            position, matrix.position(42)
-        )
-        assertConsistentState(matrix)
-    }
+  @Test
+  fun testPosition() {
+    val matrix = MatrixImpl<Int>(5, 5)
+    val position = Position(2, 3)
+    matrix.add(42, position)
+    Assert.assertEquals(
+      "Element wasn't added:",
+      position, matrix.position(42)
+    )
+    assertConsistentState(matrix)
+  }
 
 
-    @Test
-    fun testAll() {
-        val matrix = MatrixImpl<Int>(5, 5)
-        matrix.add(1, Position(1, 2))
-        matrix.add(2, Position(3, 4))
-        val position = Position(2, 3)
-        matrix.add(3, position)
-        matrix.add(4, position)
-        Assert.assertEquals(
-            "Element wasn't added:",
-            setOf(1, 2, 3, 4), matrix.all()
-        )
-        assertConsistentState(matrix)
-    }
+  @Test
+  fun testAll() {
+    val matrix = MatrixImpl<Int>(5, 5)
+    matrix.add(1, Position(1, 2))
+    matrix.add(2, Position(3, 4))
+    val position = Position(2, 3)
+    matrix.add(3, position)
+    matrix.add(4, position)
+    Assert.assertEquals(
+      "Element wasn't added:",
+      setOf(1, 2, 3, 4), matrix.all()
+    )
+    assertConsistentState(matrix)
+  }
 
-    @Test(expected = IllegalArgumentException::class)
-    fun testPresentElement() {
-        val matrix = MatrixImpl<Int>(5, 5)
-        matrix.add(1, Position(1, 1))
-        matrix.add(1, Position(2, 3))
-    }
+  @Test(expected = IllegalArgumentException::class)
+  fun testPresentElement() {
+    val matrix = MatrixImpl<Int>(5, 5)
+    matrix.add(1, Position(1, 1))
+    matrix.add(1, Position(2, 3))
+  }
 
-    @Test
-    fun testRemoval() {
-        val matrix = MatrixImpl<Int>(5, 5)
-        val position = Position(2, 3)
-        matrix.add(42, position)
-        matrix.add(50, position)
-        matrix.remove(50)
-        Assert.assertEquals(
-            "Element wasn't removed:",
-            setOf(42), matrix.allAt(position)
-        )
-        assertConsistentState(matrix)
-    }
+  @Test
+  fun testRemoval() {
+    val matrix = MatrixImpl<Int>(5, 5)
+    val position = Position(2, 3)
+    matrix.add(42, position)
+    matrix.add(50, position)
+    matrix.remove(50)
+    Assert.assertEquals(
+      "Element wasn't removed:",
+      setOf(42), matrix.allAt(position)
+    )
+    assertConsistentState(matrix)
+  }
 
-    @Test
-    fun testMatrix() {
-        fun values(i: Int, j: Int) =
-            setOf("$i-$j-1", "$i-$j-2", "$i-$j-3")
+  @Test
+  fun testMatrix() {
+    fun values(i: Int, j: Int) =
+      setOf("$i-$j-1", "$i-$j-2", "$i-$j-3")
 
-        val matrix = MatrixImpl<String>(5, 5)
-        for (i in 0..4) {
-            for (j in 0..4) {
-                values(i, j).forEach {
-                    matrix.add(it, Position(i, j))
-                }
-            }
+    val matrix = MatrixImpl<String>(5, 5)
+    for (i in 0..4) {
+      for (j in 0..4) {
+        values(i, j).forEach {
+          matrix.add(it, Position(i, j))
         }
-        for (i in 0..4) {
-            for (j in 0..4) {
-                Assert.assertEquals(
-                    "Wrong values for Position($i, $j):",
-                    values(i, j),
-                    matrix.allAt(Position(i, j))
-                )
-            }
-        }
-        assertConsistentState(matrix)
+      }
     }
+    for (i in 0..4) {
+      for (j in 0..4) {
+        Assert.assertEquals(
+          "Wrong values for Position($i, $j):",
+          values(i, j),
+          matrix.allAt(Position(i, j))
+        )
+      }
+    }
+    assertConsistentState(matrix)
+  }
 
-    private fun <E> assertConsistentState(matrix: Matrix<E>) {
-        for (x in 0 until matrix.width) {
-            for (y in 0 until matrix.height) {
-                val position = Position(x, y)
-                val elements = matrix.allAt(position)
-                elements.forEach { element ->
-                    val storedPosition = matrix.position(element)
-                    if (storedPosition != position) {
-                        throw AssertionError(
-                            "Inconsistent stored positions for element $element: " +
-                                    "$storedPosition != $position"
-                        )
-                    }
-                }
-            }
+  private fun <E> assertConsistentState(matrix: Matrix<E>) {
+    for (x in 0 until matrix.width) {
+      for (y in 0 until matrix.height) {
+        val position = Position(x, y)
+        val elements = matrix.allAt(position)
+        elements.forEach { element ->
+          val storedPosition = matrix.position(element)
+          if (storedPosition != position) {
+            throw AssertionError(
+              "Inconsistent stored positions for element $element: " +
+                "$storedPosition != $position"
+            )
+          }
         }
-        for (element in matrix.all()) {
-            val position = matrix.position(element)
-                ?: throw AssertionError(
-                    "Inconsistent stored positions for element $element: " +
-                            "no position for $element"
-                )
-            val elements = matrix.allAt(position)
-            if (!elements.contains(element)) {
-                throw AssertionError(
-                    "Inconsistent stored positions for element $element: " +
-                            "no such element at $position"
-                )
-            }
-        }
+      }
     }
+    for (element in matrix.all()) {
+      val position = matrix.position(element)
+        ?: throw AssertionError(
+          "Inconsistent stored positions for element $element: " +
+            "no position for $element"
+        )
+      val elements = matrix.allAt(position)
+      if (!elements.contains(element)) {
+        throw AssertionError(
+          "Inconsistent stored positions for element $element: " +
+            "no such element at $position"
+        )
+      }
+    }
+  }
 }
