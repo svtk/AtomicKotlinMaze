@@ -9,7 +9,7 @@ class Monster : MobileElement() {
     override val symbol: Char
         get() = MONSTER
 
-    override fun interact(maze: Maze): Set<GameAction> {
+    override fun playTurn(maze: Maze): Set<GameAction> {
         val sameCellElements = maze.sameCellElements(this)
         val robot = sameCellElements.find { it is Robot } ?: return setOf()
         return setOf(DestroyAction(robot))

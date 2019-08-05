@@ -10,7 +10,7 @@ class Robot : MobileElement() {
     override val symbol: Char
         get() = ROBOT
 
-    override fun interact(
+    override fun playTurn(
         maze: Maze
     ): Set<GameAction> {
         val sameCellElements = maze.sameCellElements(this)

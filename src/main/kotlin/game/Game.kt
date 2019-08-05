@@ -19,7 +19,7 @@ enum class Move {
 interface GameElement {
     val symbol: Char
     val sharesCell: Boolean
-    fun interact(maze: Maze): Set<GameAction>
+    fun playTurn(maze: Maze): Set<GameAction>
 }
 
 typealias Maze = Matrix<GameElement>
@@ -42,7 +42,7 @@ abstract class StaticElement(
     override val sharesCell: Boolean
 ) : GameElement {
 
-    override fun interact(maze: Maze): Set<GameAction> {
+    override fun playTurn(maze: Maze): Set<GameAction> {
         // Default implementation: do nothing
         return emptySet()
     }

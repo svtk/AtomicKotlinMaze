@@ -32,7 +32,7 @@ class GameImpl(representation: String) : Game {
         val actions = (static + mobile)
             .flatMap { element ->
                 maze.position(element)?.let { position ->
-                    element.interact(maze)
+                    element.playTurn(maze)
                 } ?: listOf<GameAction>()
             }
         applyActions(actions)
