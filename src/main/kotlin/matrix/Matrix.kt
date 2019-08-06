@@ -8,6 +8,9 @@ interface Matrix<E> {
   fun all(): Set<E>
   fun allAt(position: Position): Set<E>
   fun position(element: E): Position?
+}
+
+interface MutableMatrix<E>: Matrix<E> {
   fun add(element: E, position: Position)
   fun remove(element: E)
 }

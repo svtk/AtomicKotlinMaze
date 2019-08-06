@@ -3,7 +3,7 @@ package matrix
 class MatrixImpl<E>(
   override val width: Int,
   override val height: Int
-) : Matrix<E> {
+) : MutableMatrix<E> {
   private val cells = List(height) {
     List(width) { mutableSetOf<E>() }
   }

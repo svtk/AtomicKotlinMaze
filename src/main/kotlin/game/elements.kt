@@ -27,7 +27,7 @@ typealias PostProcessor = (Maze) -> Unit
 
 val elementPostProcessors = listOf(Teleport)
 
-fun createMaze(representation: String): Maze {
+fun createMaze(representation: String): MutableMaze {
   val lines = representation.trim().lines()
   val width = lines.maxBy { it.length }?.length ?: 0
   val height = lines.size

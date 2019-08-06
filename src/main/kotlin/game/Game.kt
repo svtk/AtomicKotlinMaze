@@ -1,6 +1,7 @@
 package game
 
 import matrix.Matrix
+import matrix.MutableMatrix
 import matrix.Position
 
 interface Game {
@@ -23,6 +24,7 @@ interface GameElement {
 }
 
 typealias Maze = Matrix<GameElement>
+typealias MutableMaze = MutableMatrix<GameElement>
 
 sealed class GameAction
 data class MoveAction(val element: GameElement, val newPosition: Position) : GameAction()

@@ -8,7 +8,7 @@ class GameImpl(representation: String) : Game {
 
   private var turns = 0
 
-  override val maze: Maze =
+  override val maze: MutableMaze =
     createMaze(representation)
 
   override fun playMove(move: Move) {
