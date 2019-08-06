@@ -28,11 +28,18 @@ fun playGame(game: Game) {
 }
 
 class GameUI(val game: Game) : JPanel() {
+  private var processingRequest = false
   init {
     isFocusable = true
     addKeyListener(object : KeyAdapter() {
       override fun keyPressed(e: KeyEvent) {
+        if (processingRequest) {
+          // ignore all the following requests until
+          // the current one is processed
+          return
+        }
         if (game.hasWon() || game.gameOver()) return
+        processingRequest = true
         val move = when (e.keyCode) {
           KeyEvent.VK_LEFT -> Move.LEFT
           KeyEvent.VK_RIGHT -> Move.RIGHT
@@ -48,6 +55,7 @@ class GameUI(val game: Game) : JPanel() {
           Timer(100) {
             game.playTurn()
             repaint()
+            processingRequest = false
           }.run {
             isRepeats = false
             start()
