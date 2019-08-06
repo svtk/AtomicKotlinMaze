@@ -25,9 +25,9 @@ interface GameElement {
 typealias Maze = Matrix<GameElement>
 
 sealed class GameAction
-class MoveAction(val element: GameElement, val newPosition: Position) : GameAction()
-class DestroyAction(val element: GameElement) : GameAction()
-class CreateAction(val element: GameElement, val position: Position) : GameAction()
+data class MoveAction(val element: GameElement, val newPosition: Position) : GameAction()
+data class DestroyAction(val element: GameElement) : GameAction()
+data class CreateAction(val element: GameElement, val position: Position) : GameAction()
 
 abstract class MobileElement : GameElement {
   override val sharesCell: Boolean

@@ -20,15 +20,15 @@ class Teleport(
 
   companion object : PostProcessor {
     override fun invoke(maze: Maze) {
-      val groupedConnections = maze.all()
+      val groupedTeleports = maze.all()
         .filterIsInstance<Teleport>()
         .groupBy { it.symbol }
 
-      for ((symbol, connections) in groupedConnections) {
-        check(connections.size == 2) {
+      for ((symbol, teleports) in groupedTeleports) {
+        check(teleports.size == 2) {
           "Wrong map: expected exactly two teleports for $symbol"
         }
-        val (first, second) = connections
+        val (first, second) = teleports
         first.connection = second
         second.connection = first
       }
