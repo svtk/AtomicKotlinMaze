@@ -25,11 +25,7 @@ class GameImpl(representation: String) : Game {
   }
 
   override fun playTurn() {
-    val allElements = maze.all()
-    val (static, mobile) =
-      allElements.partition { it is StaticElement }
-    // First handle static elements, then mobile
-    val actions = (static + mobile)
+    val actions = maze.all()
       .flatMap { element ->
         element.playTurn(maze)
       }
@@ -50,7 +46,10 @@ class GameImpl(representation: String) : Game {
   }
 
   override fun score(): Int {
-    val robot = maze.all().filterIsInstance<Robot>().singleOrNull() ?: return 0
+    val robot = maze.all()
+      .filterIsInstance<Robot>()
+      .singleOrNull()
+      ?: return 0
     return robot.score() * 100 - turns
   }
 
