@@ -23,4 +23,20 @@ class TestRobot : AbstractTestGame() {
             ######"""
     )
   }
+
+  @Test
+  fun test2() {
+    val robotMoves = listOf(RIGHT, UP, DOWN, DOWN, RIGHT)
+    checkGame(
+      robotMoves,
+      initial = """
+            ######
+            #   R#
+            ######""",
+      expected = """
+            ######
+            #   R#
+            ######"""
+    )
+  }
 }
