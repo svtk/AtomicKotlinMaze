@@ -27,9 +27,10 @@ class Robot : MobileElement() {
     return eatenFood
   }
 
-  override fun makeMove(currentPosition: Position, move: Move, maze: Maze): Position {
+  override fun makeMove(move: Move, maze: Maze): Position? {
+    val currentPosition = maze.position(this) ?: return null
     val newPosition = currentPosition.applyMove(move)
     return if (maze.isPassable(newPosition)) newPosition
-    else currentPosition
+    else null
   }
 }

@@ -15,13 +15,13 @@ class Monster : MobileElement() {
     return setOf(DestroyAction(robot))
   }
 
-  override fun makeMove(currentPosition: Position, move: Move, maze: Maze): Position {
+  override fun makeMove(move: Move, maze: Maze): Position? {
+    val currentPosition = maze.position(this) ?: return null
     val directions = listOf(UP, RIGHT, DOWN, LEFT)
-    return directions
+    val possiblePositions = directions
       .map { currentPosition.applyMove(it) }
       .filter { maze.isPassable(it) }
-      .takeIf { it.isNotEmpty() }
-      ?.random()
-      ?: currentPosition
+    if (possiblePositions.isEmpty()) return null
+    return possiblePositions.random()
   }
 }

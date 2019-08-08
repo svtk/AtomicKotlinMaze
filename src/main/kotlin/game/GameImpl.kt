@@ -17,9 +17,11 @@ class GameImpl(representation: String) : Game {
     val actions = allElements
       .filterIsInstance<MobileElement>()
       .mapNotNull { element ->
-        maze.position(element)?.let { position ->
-          MoveAction(element, element.makeMove(position, move, maze))
+        val newPosition = element.makeMove(move, maze)
+        if (newPosition != null) {
+          MoveAction(element, newPosition)
         }
+        else null
       }
     applyActions(actions)
   }
@@ -31,7 +33,6 @@ class GameImpl(representation: String) : Game {
       }
     applyActions(actions)
   }
-
 
   override fun gameOver(): Boolean {
     return maze.all().none { it is Robot }
