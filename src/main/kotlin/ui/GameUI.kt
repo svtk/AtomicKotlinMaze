@@ -148,7 +148,7 @@ fun getTileColor(char: Char): Color? = when (char) {
   WALL -> Color(0x606060)
   FOOD -> Color(0xf2ec7e)
   MONSTER -> Color(0xd495f0)
-  ROBOT -> Color(0x90b5e0)
+  ROBOT -> Color(0x0066ff)
   EXIT -> Color(0x42f560)
   in BOMB_RANGE -> Color(0xe36b6b)
   in TELEPORT_RANGE -> Color(0x39b85b)
