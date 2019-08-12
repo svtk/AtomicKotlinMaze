@@ -12,7 +12,7 @@ class Monster : MobileElement() {
   override fun playTurn(maze: Maze): Set<GameAction> {
     val sameCellElements = maze.sameCellElements(this)
     val robot = sameCellElements.find { it is Robot } ?: return setOf()
-    return setOf(DestroyAction(robot))
+    return setOf(DestroyAction(robot), GameOver)
   }
 
   override fun makeMove(move: Move, maze: Maze): Position? {

@@ -57,6 +57,10 @@ class GameImpl(representation: String) : Game {
         is CreateAction ->
           maze.add(action.element,
             action.position)
+        is GameOver ->
+          _state = LOST
+        is GameWon ->
+          _state = WON
       }
     }
   }

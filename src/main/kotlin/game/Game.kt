@@ -35,6 +35,8 @@ sealed class GameAction
 data class MoveAction(val element: GameElement, val newPosition: Position) : GameAction()
 data class DestroyAction(val element: GameElement) : GameAction()
 data class CreateAction(val element: GameElement, val position: Position) : GameAction()
+object GameOver: GameAction()
+object GameWon: GameAction()
 
 abstract class MobileElement : GameElement {
   override val sharesCell: Boolean
