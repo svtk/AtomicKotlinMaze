@@ -5,11 +5,16 @@ import matrix.MutableMatrix
 import matrix.Position
 
 interface Game {
+  enum class GameState(val isActive: Boolean) {
+    ACTIVE(true),
+    WON(false),
+    LOST(false)
+  }
+
   val maze: Maze
+  val state: GameState
   fun playMove(move: Move)
   fun playTurn()
-  fun gameOver(): Boolean
-  fun hasWon(): Boolean
   fun score(): Int
 }
 

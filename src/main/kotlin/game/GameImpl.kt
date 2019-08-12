@@ -1,12 +1,14 @@
 package game
 
-import game.elements.Exit
-import game.elements.Food
+import game.Game.GameState.*
 import game.elements.Robot
 
 class GameImpl(representation: String) : Game {
 
   private var turns = 0
+
+  private var _state = ACTIVE
+  override val state get() = _state
 
   override val maze: MutableMaze =
     createMaze(representation)
@@ -34,24 +36,11 @@ class GameImpl(representation: String) : Game {
     applyActions(actions)
   }
 
-  override fun gameOver(): Boolean {
-    return maze.all().none { it is Robot }
-  }
-
-  override fun hasWon(): Boolean {
-    val all = maze.all()
-    if (all.any { it is Food }) return false
-    val robot = all.find { it is Robot } ?: return false
-    val exit = all.find { it is Exit } ?: return false
-    return maze.position(robot) == maze.position(exit)
-  }
-
   override fun score(): Int {
     val robot = maze.all()
-      .filterIsInstance<Robot>()
-      .singleOrNull()
+      .find { it is Robot }
       ?: return 0
-    return robot.score() * 100 - turns
+    return (robot as Robot).score() * 100 - turns
   }
 
   private fun applyActions(

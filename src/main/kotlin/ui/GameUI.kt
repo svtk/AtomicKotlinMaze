@@ -1,6 +1,7 @@
 package ui
 
 import game.*
+import game.Game.GameState.*
 import matrix.Position
 import java.awt.*
 import java.awt.event.KeyAdapter
@@ -38,7 +39,7 @@ class GameUI(val game: Game) : JPanel() {
           // the current one is processed
           return
         }
-        if (game.hasWon() || game.gameOver()) return
+        if (!game.state.isActive) return
         processingRequest = true
         val move = when (e.keyCode) {
           KeyEvent.VK_LEFT -> Move.LEFT
@@ -87,16 +88,16 @@ class GameUI(val game: Game) : JPanel() {
   }
 
   private fun paintResults(g: Graphics2D) {
-    if (game.gameOver() || game.hasWon()) {
+    if (!game.state.isActive) {
       g.color = Color(255, 255, 255, 225)
       g.fillRect(0, 0, width, height)
 
       g.color = RESULT_FONT_COLOR
       g.font = Font(FONT_NAME, Font.BOLD, 36)
-      if (game.hasWon()) {
+      if (game.state == WON) {
         g.drawString("Score: ${game.score()}", 15, 50)
       }
-      if (game.gameOver()) {
+      if (game.state == LOST) {
         g.drawString("Game over!", 15, 50)
       }
     }
