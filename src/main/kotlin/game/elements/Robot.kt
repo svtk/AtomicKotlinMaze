@@ -5,7 +5,7 @@ import matrix.Position
 
 class Robot : MobileElement() {
 
-  private var eatenFood: Int = 0
+  private var eatenFoodItems: Int = 0
 
   override val symbol: Char
     get() = ROBOT
@@ -17,14 +17,14 @@ class Robot : MobileElement() {
     return sameCellElements
       .filterIsInstance<Food>()
       .map { food ->
-        eatenFood++
+        eatenFoodItems++
         DestroyAction(food)
       }
       .toSet()
   }
 
   fun score(): Int {
-    return eatenFood
+    return eatenFoodItems
   }
 
   override fun makeMove(move: Move, maze: Maze): Position? {
