@@ -15,11 +15,15 @@ class Bomb(
     val sameCellElements = maze.sameCellElements(this)
     if (sameCellElements.isEmpty()) return setOf()
     val bombPosition = maze.position(this) ?: return setOf()
-    return maze.all().mapNotNull { element ->
+    return maze.all().flatMap { element ->
       val position = maze.position(element)
       if (position != null && isCloseToBomb(position, bombPosition)) {
-        DestroyAction(element)
-      } else null
+        if (element is Robot) {
+          listOf(DestroyAction(element), GameOver)
+        } else {
+          listOf(DestroyAction(element))
+        }
+      } else listOf()
     }.toSet()
   }
 
