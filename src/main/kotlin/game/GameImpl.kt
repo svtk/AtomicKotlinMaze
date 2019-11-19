@@ -52,11 +52,11 @@ class GameImpl(representation: String) : Game {
           maze.remove(action.element)
         is MoveAction -> {
           maze.remove(action.element)
-          maze.add(action.element, action.newPosition)
+          maze.add(action.element, action.newCell)
         }
         is CreateAction ->
           maze.add(action.element,
-            action.position)
+            action.cell)
         is GameOver ->
           _state = LOST
         is GameWon ->

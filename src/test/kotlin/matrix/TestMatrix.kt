@@ -2,13 +2,12 @@ package matrix
 
 import org.junit.Assert
 import org.junit.Test
-import java.lang.IllegalStateException
 
 class TestMatrix {
   @Test
   fun testAdditionOfOneElement() {
     val matrix = MatrixImpl<Int>(5, 5)
-    val position = Position(2, 3)
+    val position = Cell(2, 3)
     matrix.add(42, position)
     Assert.assertEquals(
       "Element wasn't added:",
@@ -20,7 +19,7 @@ class TestMatrix {
   @Test
   fun testAdditionOfSeveralElements() {
     val matrix = MatrixImpl<Int>(5, 5)
-    val position = Position(2, 3)
+    val position = Cell(2, 3)
     matrix.add(42, position)
     matrix.add(50, position)
     Assert.assertEquals(
@@ -33,7 +32,7 @@ class TestMatrix {
   @Test
   fun testPosition() {
     val matrix = MatrixImpl<Int>(5, 5)
-    val position = Position(2, 3)
+    val position = Cell(2, 3)
     matrix.add(42, position)
     Assert.assertEquals(
       "Element wasn't added:",
@@ -46,9 +45,9 @@ class TestMatrix {
   @Test
   fun testAll() {
     val matrix = MatrixImpl<Int>(5, 5)
-    matrix.add(1, Position(1, 2))
-    matrix.add(2, Position(3, 4))
-    val position = Position(2, 3)
+    matrix.add(1, Cell(1, 2))
+    matrix.add(2, Cell(3, 4))
+    val position = Cell(2, 3)
     matrix.add(3, position)
     matrix.add(4, position)
     Assert.assertEquals(
@@ -61,14 +60,14 @@ class TestMatrix {
   @Test(expected = IllegalArgumentException::class)
   fun testPresentElement() {
     val matrix = MatrixImpl<Int>(5, 5)
-    matrix.add(1, Position(1, 1))
-    matrix.add(1, Position(2, 3))
+    matrix.add(1, Cell(1, 1))
+    matrix.add(1, Cell(2, 3))
   }
 
   @Test
   fun testRemoval() {
     val matrix = MatrixImpl<Int>(5, 5)
-    val position = Position(2, 3)
+    val position = Cell(2, 3)
     matrix.add(42, position)
     matrix.add(50, position)
     matrix.remove(50)
@@ -88,7 +87,7 @@ class TestMatrix {
     for (i in 0..4) {
       for (j in 0..4) {
         values(i, j).forEach {
-          matrix.add(it, Position(i, j))
+          matrix.add(it, Cell(i, j))
         }
       }
     }
@@ -97,7 +96,7 @@ class TestMatrix {
         Assert.assertEquals(
           "Wrong values for Position($i, $j):",
           values(i, j),
-          matrix.allAt(Position(i, j))
+          matrix.allAt(Cell(i, j))
         )
       }
     }
@@ -107,7 +106,7 @@ class TestMatrix {
   private fun <E> assertConsistentState(matrix: Matrix<E>) {
     for (x in 0 until matrix.width) {
       for (y in 0 until matrix.height) {
-        val position = Position(x, y)
+        val position = Cell(x, y)
         val elements = matrix.allAt(position)
         elements.forEach { element ->
           val storedPosition = matrix.position(element)

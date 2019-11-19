@@ -2,7 +2,7 @@ package game
 
 import game.elements.*
 import matrix.MatrixImpl
-import matrix.Position
+import matrix.Cell
 
 const val WALL = '#'
 const val FOOD = '.'
@@ -38,7 +38,7 @@ fun createMaze(representation: String): MutableMaze {
       val ch = lines.getOrNull(y)?.getOrNull(x)
       val element = createGameElement(ch)
       if (element != null) {
-        maze.add(element, Position(x, y))
+        maze.add(element, Cell(x, y))
       }
     }
   }

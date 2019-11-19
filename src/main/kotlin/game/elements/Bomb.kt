@@ -1,7 +1,7 @@
 package game.elements
 
 import game.*
-import matrix.Position
+import matrix.Cell
 import kotlin.math.sqrt
 
 class Bomb(
@@ -27,10 +27,10 @@ class Bomb(
     }.toSet()
   }
 
-  private fun isCloseToBomb(position: Position, bombPosition: Position) =
-    distance(position, bombPosition) <= diameter / 2
+  private fun isCloseToBomb(cell: Cell, bombCell: Cell) =
+    distance(cell, bombCell) <= diameter / 2
 
-  private fun distance(from: Position, to: Position): Double {
+  private fun distance(from: Cell, to: Cell): Double {
     fun sqr(i: Int) = i.toDouble() * i
     return sqrt(sqr(from.x - to.x) + sqr(from.y - to.y))
   }

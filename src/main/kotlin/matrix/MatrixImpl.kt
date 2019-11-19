@@ -7,23 +7,23 @@ class MatrixImpl<E>(
   private val cells = List(height) {
     List(width) { mutableSetOf<E>() }
   }
-  private val positions = mutableMapOf<E, Position>()
+  private val positions = mutableMapOf<E, Cell>()
 
-  private fun elements(position: Position): MutableSet<E> {
-    if (position.x !in 0 until width || position.y !in 0 until height)
+  private fun elements(cell: Cell): MutableSet<E> {
+    if (cell.x !in 0 until width || cell.y !in 0 until height)
       throw IllegalArgumentException(
-        "Wrong position(${position.x}, ${position.y}): " +
+        "Wrong position(${cell.x}, ${cell.y}): " +
           "not in a range of (0..${width - 1}, 0..${height - 1}"
       )
-    return cells[position.y][position.x]
+    return cells[cell.y][cell.x]
   }
 
-  override fun add(element: E, position: Position) {
+  override fun add(element: E, cell: Cell) {
     if (positions.containsKey(element)) {
       throw IllegalArgumentException("Element $element is already present in a map")
     }
-    elements(position) += element
-    positions[element] = position
+    elements(cell) += element
+    positions[element] = cell
   }
 
   override fun remove(element: E) {
@@ -32,11 +32,11 @@ class MatrixImpl<E>(
     positions.remove(element)
   }
 
-  override fun allAt(position: Position): Set<E> {
-    return elements(position)
+  override fun allAt(cell: Cell): Set<E> {
+    return elements(cell)
   }
 
-  override fun position(element: E): Position? {
+  override fun position(element: E): Cell? {
     return positions[element]
   }
 

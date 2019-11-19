@@ -1,25 +1,25 @@
 package game
 
-import matrix.Position
+import matrix.Cell
 
 fun Maze.sameCellElements(element: GameElement): Set<GameElement> {
   val position = position(element) ?: return setOf()
   return allAt(position) - element
 }
 
-fun Maze.isPassable(position: Position): Boolean {
-  if (position.x !in (0 until width) || position.y !in (0 until height)) {
+fun Maze.isPassable(cell: Cell): Boolean {
+  if (cell.x !in (0 until width) || cell.y !in (0 until height)) {
     return false
   }
-  val elementsAtNewPosition = allAt(position)
+  val elementsAtNewPosition = allAt(cell)
   return elementsAtNewPosition.all { it.sharesCell }
 }
 
-fun Position.applyMove(move: Move): Position =
+fun Cell.applyMove(move: Move): Cell =
   when (move) {
-    Move.WAIT -> Position(x, y)
-    Move.UP -> Position(x, y - 1)
-    Move.DOWN -> Position(x, y + 1)
-    Move.RIGHT -> Position(x + 1, y)
-    Move.LEFT -> Position(x - 1, y)
+    Move.WAIT -> Cell(x, y)
+    Move.UP -> Cell(x, y - 1)
+    Move.DOWN -> Cell(x, y + 1)
+    Move.RIGHT -> Cell(x + 1, y)
+    Move.LEFT -> Cell(x - 1, y)
   }

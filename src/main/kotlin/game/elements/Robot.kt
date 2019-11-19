@@ -1,7 +1,7 @@
 package game.elements
 
 import game.*
-import matrix.Position
+import matrix.Cell
 
 class Robot : MobileElement() {
 
@@ -27,7 +27,7 @@ class Robot : MobileElement() {
     return eatenFoodItems
   }
 
-  override fun move(move: Move, maze: Maze): Position? {
+  override fun move(move: Move, maze: Maze): Cell? {
     val currentPosition = maze.position(this) ?: return null
     val newPosition = currentPosition.applyMove(move)
     return if (maze.isPassable(newPosition)) newPosition
