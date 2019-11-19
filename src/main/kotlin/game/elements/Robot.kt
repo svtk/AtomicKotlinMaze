@@ -28,7 +28,7 @@ class Robot : MobileElement() {
   }
 
   override fun move(move: Move, maze: Maze): Cell? {
-    val currentPosition = maze.position(this) ?: return null
+    val currentPosition = maze.cell(this) ?: return null
     val newPosition = currentPosition.applyMove(move)
     return if (maze.isPassable(newPosition)) newPosition
     else null

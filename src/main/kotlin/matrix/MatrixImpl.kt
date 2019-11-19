@@ -12,7 +12,7 @@ class MatrixImpl<E>(
   private fun elements(cell: Cell): MutableSet<E> {
     if (cell.x !in 0 until width || cell.y !in 0 until height)
       throw IllegalArgumentException(
-        "Wrong position(${cell.x}, ${cell.y}): " +
+        "Wrong cell(${cell.x}, ${cell.y}): " +
           "not in a range of (0..${width - 1}, 0..${height - 1}"
       )
     return cells[cell.y][cell.x]
@@ -27,8 +27,8 @@ class MatrixImpl<E>(
   }
 
   override fun remove(element: E) {
-    val position = position(element) ?: return
-    elements(position) -= element
+    val cell = cell(element) ?: return
+    elements(cell) -= element
     positions.remove(element)
   }
 
@@ -36,7 +36,7 @@ class MatrixImpl<E>(
     return elements(cell)
   }
 
-  override fun position(element: E): Cell? {
+  override fun cell(element: E): Cell? {
     return positions[element]
   }
 

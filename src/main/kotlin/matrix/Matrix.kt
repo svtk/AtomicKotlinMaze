@@ -7,7 +7,7 @@ interface Matrix<E> {
   val height: Int
   fun all(): Set<E>
   fun allAt(cell: Cell): Set<E>
-  fun position(element: E): Cell?
+  fun cell(element: E): Cell?
 }
 
 interface MutableMatrix<E>: Matrix<E> {

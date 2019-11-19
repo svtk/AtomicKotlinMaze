@@ -3,8 +3,8 @@ package game
 import matrix.Cell
 
 fun Maze.sameCellElements(element: GameElement): Set<GameElement> {
-  val position = position(element) ?: return setOf()
-  return allAt(position) - element
+  val cell = cell(element) ?: return setOf()
+  return allAt(cell) - element
 }
 
 fun Maze.isPassable(cell: Cell): Boolean {

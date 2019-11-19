@@ -12,7 +12,7 @@ class Teleport(
     val sameCellElements = maze.sameCellElements(this)
     if (connection == null) return setOf()
     return sameCellElements.mapNotNull {
-      maze.position(connection!!)?.let { newPosition ->
+      maze.cell(connection!!)?.let { newPosition ->
         MoveAction(it, newPosition)
       }
     }.toSet()

@@ -14,10 +14,10 @@ class Bomb(
   override fun play(maze: Maze): Set<GameAction> {
     val sameCellElements = maze.sameCellElements(this)
     if (sameCellElements.isEmpty()) return setOf()
-    val bombPosition = maze.position(this) ?: return setOf()
+    val bombPosition = maze.cell(this) ?: return setOf()
     return maze.all().flatMap { element ->
-      val position = maze.position(element)
-      if (position != null && isCloseToBomb(position, bombPosition)) {
+      val cell = maze.cell(element)
+      if (cell != null && isCloseToBomb(cell, bombPosition)) {
         if (element is Robot) {
           listOf(DestroyAction(element), GameOver)
         } else {

@@ -16,7 +16,7 @@ class Monster : MobileElement() {
   }
 
   override fun move(move: Move, maze: Maze): Cell? {
-    val currentPosition = maze.position(this) ?: return null
+    val currentPosition = maze.cell(this) ?: return null
     val directions = listOf(UP, RIGHT, DOWN, LEFT)
     val possiblePositions = directions
       .map { currentPosition.applyMove(it) }

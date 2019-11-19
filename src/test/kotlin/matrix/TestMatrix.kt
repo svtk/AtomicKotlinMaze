@@ -7,11 +7,11 @@ class TestMatrix {
   @Test
   fun testAdditionOfOneElement() {
     val matrix = MatrixImpl<Int>(5, 5)
-    val position = Cell(2, 3)
-    matrix.add(42, position)
+    val cell = Cell(2, 3)
+    matrix.add(42, cell)
     Assert.assertEquals(
       "Element wasn't added:",
-      setOf(42), matrix.allAt(position)
+      setOf(42), matrix.allAt(cell)
     )
     assertConsistentState(matrix)
   }
@@ -19,12 +19,12 @@ class TestMatrix {
   @Test
   fun testAdditionOfSeveralElements() {
     val matrix = MatrixImpl<Int>(5, 5)
-    val position = Cell(2, 3)
-    matrix.add(42, position)
-    matrix.add(50, position)
+    val cell = Cell(2, 3)
+    matrix.add(42, cell)
+    matrix.add(50, cell)
     Assert.assertEquals(
       "Element wasn't added:",
-      setOf(42, 50), matrix.allAt(position)
+      setOf(42, 50), matrix.allAt(cell)
     )
     assertConsistentState(matrix)
   }
@@ -32,11 +32,11 @@ class TestMatrix {
   @Test
   fun testPosition() {
     val matrix = MatrixImpl<Int>(5, 5)
-    val position = Cell(2, 3)
-    matrix.add(42, position)
+    val cell = Cell(2, 3)
+    matrix.add(42, cell)
     Assert.assertEquals(
       "Element wasn't added:",
-      position, matrix.position(42)
+      cell, matrix.cell(42)
     )
     assertConsistentState(matrix)
   }
@@ -47,9 +47,9 @@ class TestMatrix {
     val matrix = MatrixImpl<Int>(5, 5)
     matrix.add(1, Cell(1, 2))
     matrix.add(2, Cell(3, 4))
-    val position = Cell(2, 3)
-    matrix.add(3, position)
-    matrix.add(4, position)
+    val cell = Cell(2, 3)
+    matrix.add(3, cell)
+    matrix.add(4, cell)
     Assert.assertEquals(
       "Element wasn't added:",
       setOf(1, 2, 3, 4), matrix.all()
@@ -67,13 +67,13 @@ class TestMatrix {
   @Test
   fun testRemoval() {
     val matrix = MatrixImpl<Int>(5, 5)
-    val position = Cell(2, 3)
-    matrix.add(42, position)
-    matrix.add(50, position)
+    val cell = Cell(2, 3)
+    matrix.add(42, cell)
+    matrix.add(50, cell)
     matrix.remove(50)
     Assert.assertEquals(
       "Element wasn't removed:",
-      setOf(42), matrix.allAt(position)
+      setOf(42), matrix.allAt(cell)
     )
     assertConsistentState(matrix)
   }
@@ -106,30 +106,30 @@ class TestMatrix {
   private fun <E> assertConsistentState(matrix: Matrix<E>) {
     for (x in 0 until matrix.width) {
       for (y in 0 until matrix.height) {
-        val position = Cell(x, y)
-        val elements = matrix.allAt(position)
+        val cell = Cell(x, y)
+        val elements = matrix.allAt(cell)
         elements.forEach { element ->
-          val storedPosition = matrix.position(element)
-          if (storedPosition != position) {
+          val storedPosition = matrix.cell(element)
+          if (storedPosition != cell) {
             throw AssertionError(
               "Inconsistent stored positions for element $element: " +
-                "$storedPosition != $position"
+                "$storedPosition != $cell"
             )
           }
         }
       }
     }
     for (element in matrix.all()) {
-      val position = matrix.position(element)
+      val cell = matrix.cell(element)
         ?: throw AssertionError(
-          "Inconsistent stored positions for element $element: " +
-            "no position for $element"
+          "Inconsistent stored cells for element $element: " +
+            "no cell for $element"
         )
-      val elements = matrix.allAt(position)
+      val elements = matrix.allAt(cell)
       if (!elements.contains(element)) {
         throw AssertionError(
-          "Inconsistent stored positions for element $element: " +
-            "no such element at $position"
+          "Inconsistent stored cells for element $element: " +
+            "no such element at $cell"
         )
       }
     }
