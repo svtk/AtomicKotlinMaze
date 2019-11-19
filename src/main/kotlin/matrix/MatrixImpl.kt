@@ -4,48 +4,48 @@ class MatrixImpl<E>(
   override val width: Int,
   override val height: Int
 ) : MutableMatrix<E> {
-  private val cells = List(height) {
+  private val elementMap = List(height) {
     List(width) { mutableSetOf<E>() }
   }
-  private val positions = mutableMapOf<E, Cell>()
+  private val cellMap = mutableMapOf<E, Cell>()
 
-  private fun elements(cell: Cell): MutableSet<E> {
+  private fun elementsIn(cell: Cell): MutableSet<E> {
     if (cell.x !in 0 until width || cell.y !in 0 until height)
       throw IllegalArgumentException(
         "Wrong cell(${cell.x}, ${cell.y}): " +
           "not in a range of (0..${width - 1}, 0..${height - 1}"
       )
-    return cells[cell.y][cell.x]
+    return elementMap[cell.y][cell.x]
   }
 
   override fun add(element: E, cell: Cell) {
-    if (positions.containsKey(element)) {
-      throw IllegalArgumentException("Element $element is already present in a map")
+    if (cellMap.containsKey(element)) {
+      throw IllegalArgumentException("Element $element is already present in a matrix")
     }
-    elements(cell) += element
-    positions[element] = cell
+    elementsIn(cell) += element
+    cellMap[element] = cell
   }
 
   override fun remove(element: E) {
     val cell = cell(element) ?: return
-    elements(cell) -= element
-    positions.remove(element)
+    elementsIn(cell) -= element
+    cellMap.remove(element)
   }
 
   override fun allIn(cell: Cell): Set<E> {
-    return elements(cell)
+    return elementsIn(cell)
   }
 
   override fun cell(element: E): Cell? {
-    return positions[element]
+    return cellMap[element]
   }
 
   override fun all(): Set<E> {
-    return positions.keys.toSet()
+    return cellMap.keys.toSet()
   }
 
   override fun toString(): String {
-    return cells.joinToString("\n") { row ->
+    return elementMap.joinToString("\n") { row ->
       row.joinToString("") { elements ->
         "${elements.lastOrNull()?.toString() ?: ' '}"
       }.trimEnd()
