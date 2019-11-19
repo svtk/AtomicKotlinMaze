@@ -107,8 +107,8 @@ class TestMatrix {
     for (x in 0 until matrix.width) {
       for (y in 0 until matrix.height) {
         val cell = Cell(x, y)
-        val elements = matrix.allIn(cell)
-        elements.forEach { element ->
+        val cellOccupants = matrix.allIn(cell)
+        cellOccupants.forEach { element ->
           val storedPosition = matrix.cell(element)
           if (storedPosition != cell) {
             throw AssertionError(

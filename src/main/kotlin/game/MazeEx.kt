@@ -11,8 +11,8 @@ fun Maze.isPassable(cell: Cell): Boolean {
   if (cell.x !in (0 until width) || cell.y !in (0 until height)) {
     return false
   }
-  val elementsAtNewPosition = allIn(cell)
-  return elementsAtNewPosition.all { it.sharesCell }
+  val cellOccupants = allIn(cell)
+  return cellOccupants.all { it.sharesCell }
 }
 
 fun Cell.applyMove(move: Move): Cell =
