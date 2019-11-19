@@ -6,7 +6,7 @@ interface Matrix<E> {
   val width: Int
   val height: Int
   fun all(): Set<E>
-  fun allAt(cell: Cell): Set<E>
+  fun allIn(cell: Cell): Set<E>
   fun cell(element: E): Cell?
 }
 

@@ -32,7 +32,7 @@ class MatrixImpl<E>(
     positions.remove(element)
   }
 
-  override fun allAt(cell: Cell): Set<E> {
+  override fun allIn(cell: Cell): Set<E> {
     return elements(cell)
   }
 

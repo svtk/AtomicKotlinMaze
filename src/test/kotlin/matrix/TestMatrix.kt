@@ -11,7 +11,7 @@ class TestMatrix {
     matrix.add(42, cell)
     Assert.assertEquals(
       "Element wasn't added:",
-      setOf(42), matrix.allAt(cell)
+      setOf(42), matrix.allIn(cell)
     )
     assertConsistentState(matrix)
   }
@@ -24,7 +24,7 @@ class TestMatrix {
     matrix.add(50, cell)
     Assert.assertEquals(
       "Element wasn't added:",
-      setOf(42, 50), matrix.allAt(cell)
+      setOf(42, 50), matrix.allIn(cell)
     )
     assertConsistentState(matrix)
   }
@@ -73,7 +73,7 @@ class TestMatrix {
     matrix.remove(50)
     Assert.assertEquals(
       "Element wasn't removed:",
-      setOf(42), matrix.allAt(cell)
+      setOf(42), matrix.allIn(cell)
     )
     assertConsistentState(matrix)
   }
@@ -96,7 +96,7 @@ class TestMatrix {
         Assert.assertEquals(
           "Wrong values for Position($i, $j):",
           values(i, j),
-          matrix.allAt(Cell(i, j))
+          matrix.allIn(Cell(i, j))
         )
       }
     }
@@ -107,7 +107,7 @@ class TestMatrix {
     for (x in 0 until matrix.width) {
       for (y in 0 until matrix.height) {
         val cell = Cell(x, y)
-        val elements = matrix.allAt(cell)
+        val elements = matrix.allIn(cell)
         elements.forEach { element ->
           val storedPosition = matrix.cell(element)
           if (storedPosition != cell) {
@@ -125,7 +125,7 @@ class TestMatrix {
           "Inconsistent stored cells for element $element: " +
             "no cell for $element"
         )
-      val elements = matrix.allAt(cell)
+      val elements = matrix.allIn(cell)
       if (!elements.contains(element)) {
         throw AssertionError(
           "Inconsistent stored cells for element $element: " +

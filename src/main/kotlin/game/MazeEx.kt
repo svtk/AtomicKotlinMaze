@@ -4,14 +4,14 @@ import matrix.Cell
 
 fun Maze.sameCellElements(element: GameElement): Set<GameElement> {
   val cell = cell(element) ?: return setOf()
-  return allAt(cell) - element
+  return allIn(cell) - element
 }
 
 fun Maze.isPassable(cell: Cell): Boolean {
   if (cell.x !in (0 until width) || cell.y !in (0 until height)) {
     return false
   }
-  val elementsAtNewPosition = allAt(cell)
+  val elementsAtNewPosition = allIn(cell)
   return elementsAtNewPosition.all { it.sharesCell }
 }
 

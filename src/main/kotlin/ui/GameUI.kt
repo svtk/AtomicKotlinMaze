@@ -75,7 +75,7 @@ class GameUI(val game: Game) : JPanel() {
       for (y in 0 until game.maze.height) {
         drawTile(
           g,
-          game.maze.allAt(Cell(x, y)).lastOrNull()?.symbol ?: ' ',
+          game.maze.allIn(Cell(x, y)).lastOrNull()?.symbol ?: ' ',
           x, y
         )
       }
