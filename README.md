@@ -14,3 +14,6 @@ or run the following gradle command:
 ./gradlew build
 ./gradlew game
 ``` 
+
+To play a different maze, change the path to its representation in the `main.kt`.
+Several mazes are available in the `mazes` folder.
