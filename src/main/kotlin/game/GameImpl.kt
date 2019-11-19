@@ -19,7 +19,7 @@ class GameImpl(representation: String) : Game {
     val actions = allElements
       .filterIsInstance<MobileElement>()
       .mapNotNull { element ->
-        val newPosition = element.makeMove(move, maze)
+        val newPosition = element.move(move, maze)
         if (newPosition != null) {
           MoveAction(element, newPosition)
         }
@@ -31,7 +31,7 @@ class GameImpl(representation: String) : Game {
   override fun playTurn() {
     val actions = maze.all()
       .flatMap { element ->
-        element.playTurn(maze)
+        element.play(maze)
       }
     applyActions(actions)
   }

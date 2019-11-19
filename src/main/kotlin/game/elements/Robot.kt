@@ -10,7 +10,7 @@ class Robot : MobileElement() {
   override val symbol: Char
     get() = ROBOT
 
-  override fun playTurn(
+  override fun play(
     maze: Maze
   ): Set<GameAction> {
     val sameCellElements = maze.sameCellElements(this)
@@ -27,7 +27,7 @@ class Robot : MobileElement() {
     return eatenFoodItems
   }
 
-  override fun makeMove(move: Move, maze: Maze): Position? {
+  override fun move(move: Move, maze: Maze): Position? {
     val currentPosition = maze.position(this) ?: return null
     val newPosition = currentPosition.applyMove(move)
     return if (maze.isPassable(newPosition)) newPosition

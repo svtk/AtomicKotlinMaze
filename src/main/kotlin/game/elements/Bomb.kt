@@ -11,7 +11,7 @@ class Bomb(
   override val symbol
     get() = '0' + diameter
 
-  override fun playTurn(maze: Maze): Set<GameAction> {
+  override fun play(maze: Maze): Set<GameAction> {
     val sameCellElements = maze.sameCellElements(this)
     if (sameCellElements.isEmpty()) return setOf()
     val bombPosition = maze.position(this) ?: return setOf()

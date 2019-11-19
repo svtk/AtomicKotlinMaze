@@ -9,13 +9,13 @@ class Monster : MobileElement() {
   override val symbol: Char
     get() = MONSTER
 
-  override fun playTurn(maze: Maze): Set<GameAction> {
+  override fun play(maze: Maze): Set<GameAction> {
     val sameCellElements = maze.sameCellElements(this)
     val robot = sameCellElements.find { it is Robot } ?: return setOf()
     return setOf(DestroyAction(robot), GameOver)
   }
 
-  override fun makeMove(move: Move, maze: Maze): Position? {
+  override fun move(move: Move, maze: Maze): Position? {
     val currentPosition = maze.position(this) ?: return null
     val directions = listOf(UP, RIGHT, DOWN, LEFT)
     val possiblePositions = directions

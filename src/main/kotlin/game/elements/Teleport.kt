@@ -8,7 +8,7 @@ class Teleport(
 
   private var connection: Teleport? = null
 
-  override fun playTurn(maze: Maze): Set<GameAction> {
+  override fun play(maze: Maze): Set<GameAction> {
     val sameCellElements = maze.sameCellElements(this)
     if (connection == null) return setOf()
     return sameCellElements.mapNotNull {

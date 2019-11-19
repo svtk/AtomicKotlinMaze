@@ -16,7 +16,7 @@ class Exit : StaticElement(sharesCell = true) {
   override val symbol: Char
     get() = EXIT
 
-  override fun playTurn(maze: Maze): Set<GameAction> {
+  override fun play(maze: Maze): Set<GameAction> {
     val sameCellElements =
       maze.sameCellElements(this)
     if (sameCellElements.any { it is Robot } &&
