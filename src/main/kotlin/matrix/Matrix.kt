@@ -2,7 +2,10 @@ package matrix
 
 data class Position(val x: Int, val y: Int)
 
-data class Cell<E>(val position: Position, val occupants: Set<E>)
+interface Cell<E> {
+  val position: Position
+  val occupants: Set<E>
+}
 
 interface Matrix<E> {
   val width: Int
