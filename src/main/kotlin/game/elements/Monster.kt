@@ -2,7 +2,7 @@ package game.elements
 
 import game.*
 import game.Move.*
-import matrix.Cell
+import matrix.Position
 
 class Monster : MobileElement() {
 
@@ -15,8 +15,8 @@ class Monster : MobileElement() {
     return setOf(DestroyAction(robot), GameOver)
   }
 
-  override fun move(move: Move, maze: Maze): Cell? {
-    val currentPosition = maze.cell(this) ?: return null
+  override fun move(move: Move, maze: Maze): Position? {
+    val currentPosition = maze.position(this) ?: return null
     val directions = listOf(UP, RIGHT, DOWN, LEFT)
     val possiblePositions = directions
       .map { currentPosition.applyMove(it) }

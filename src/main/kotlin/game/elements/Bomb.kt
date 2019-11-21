@@ -1,7 +1,7 @@
 package game.elements
 
 import game.*
-import matrix.Cell
+import matrix.Position
 import kotlin.math.sqrt
 
 class Bomb(
@@ -14,9 +14,9 @@ class Bomb(
   override fun play(maze: Maze): Set<GameAction> {
     val sameCellElements = maze.sameCellElements(this)
     if (sameCellElements.isEmpty()) return setOf()
-    val bombPosition = maze.cell(this) ?: return setOf()
+    val bombPosition = maze.position(this) ?: return setOf()
     return maze.all().flatMap { element ->
-      val cell = maze.cell(element)
+      val cell = maze.position(element)
       if (cell != null && isCloseToBomb(cell, bombPosition)) {
         if (element is Robot) {
           listOf(DestroyAction(element), GameOver)
@@ -27,10 +27,10 @@ class Bomb(
     }.toSet()
   }
 
-  private fun isCloseToBomb(cell: Cell, bombCell: Cell) =
-    distance(cell, bombCell) <= diameter / 2
+  private fun isCloseToBomb(position: Position, bombPosition: Position) =
+    distance(position, bombPosition) <= diameter / 2
 
-  private fun distance(from: Cell, to: Cell): Double {
+  private fun distance(from: Position, to: Position): Double {
     fun sqr(i: Int) = i.toDouble() * i
     return sqrt(sqr(from.x - to.x) + sqr(from.y - to.y))
   }

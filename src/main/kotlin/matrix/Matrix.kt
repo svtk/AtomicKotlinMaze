@@ -1,16 +1,18 @@
 package matrix
 
-data class Cell(val x: Int, val y: Int)
+data class Position(val x: Int, val y: Int)
+
+data class Cell<E>(val position: Position, val occupants: Set<E>)
 
 interface Matrix<E> {
   val width: Int
   val height: Int
   fun all(): Set<E>
-  fun allIn(cell: Cell): Set<E>
-  fun cell(element: E): Cell?
+  fun cell(position: Position): Cell<E>
+  fun position(element: E): Position?
 }
 
 interface MutableMatrix<E>: Matrix<E> {
-  fun add(element: E, cell: Cell)
+  fun add(element: E, position: Position)
   fun remove(element: E)
 }

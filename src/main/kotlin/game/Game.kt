@@ -2,7 +2,7 @@ package game
 
 import matrix.Matrix
 import matrix.MutableMatrix
-import matrix.Cell
+import matrix.Position
 
 interface Game {
   enum class GameState(val isActive: Boolean) {
@@ -32,9 +32,9 @@ typealias Maze = Matrix<GameElement>
 typealias MutableMaze = MutableMatrix<GameElement>
 
 sealed class GameAction
-data class MoveAction(val element: GameElement, val newCell: Cell) : GameAction()
+data class MoveAction(val element: GameElement, val newPosition: Position) : GameAction()
 data class DestroyAction(val element: GameElement) : GameAction()
-data class CreateAction(val element: GameElement, val cell: Cell) : GameAction()
+data class CreateAction(val element: GameElement, val position: Position) : GameAction()
 object GameOver: GameAction()
 object GameWon: GameAction()
 
@@ -42,7 +42,7 @@ abstract class MobileElement : GameElement {
   override val sharesCell: Boolean
     get() = true
 
-  abstract fun move(move: Move, maze: Maze): Cell?
+  abstract fun move(move: Move, maze: Maze): Position?
 
   override fun toString() = symbol.toString()
 }
